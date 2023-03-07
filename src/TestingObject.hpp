@@ -7,5 +7,7 @@ namespace AdvancedTools
     public:
         TestingObject(){};
         virtual ~TestingObject(){};
+
+        
     };
 }

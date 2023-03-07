@@ -16,10 +16,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    Tester tester = Tester(sampleSize);
-    tester.Run();
+    Tester* tester = new Tester(sampleSize);
+    tester->Run();
+    delete tester;
 
-    std::cout << "Press enter to exit...";
+    std::cout << endl << endl <<"Press enter to exit...";
     std::cin.ignore();
     return 0;
 }

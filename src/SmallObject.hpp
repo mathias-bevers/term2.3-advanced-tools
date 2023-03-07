@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <sstream>
+
 #include "TestingObject.hpp"
 
 namespace AdvancedTools
@@ -12,5 +15,12 @@ namespace AdvancedTools
     public:
         SmallObject(int index);
         ~SmallObject() override;
+
+        operator std::string() const
+        {
+            std::ostringstream stringStream;
+            stringStream << "small#" << integer << " with size of: " << sizeof(this);
+            return stringStream.str();
+        }
     };
 }
