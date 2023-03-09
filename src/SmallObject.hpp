@@ -1,12 +1,13 @@
 #pragma once
-
 #include <string>
 #include <sstream>
 
 #include "TestingObject.hpp"
 
+using namespace std;
 namespace AdvancedTools
 {
+    /// @brief A class with just an id which makes the N.
     class SmallObject : public TestingObject
     {
     public:
@@ -16,11 +17,11 @@ namespace AdvancedTools
         SmallObject(int index);
         ~SmallObject() override;
 
-        operator std::string() const
+        string to_string() const override
         {
-            std::ostringstream stringStream;
-            stringStream << "small#" << integer << " with size of: " << sizeof(this);
-            return stringStream.str();
+            std::ostringstream ss;
+            ss << "small#" << *integer << " with size of: " << sizeof(int*);
+            return ss.str();
         }
     };
 }

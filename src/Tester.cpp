@@ -12,15 +12,20 @@ namespace AdvancedTools
         cout << "Running test with " << sampleSize << " iterations." << endl << endl;
 
         stopwatch.start();
-        
-        uint64_t elapsedMS = TestSmall();
-        cout << "Completed smallObjects in " << elapsedMS << "ms" << endl;
 
-        
-        cout << "Completed test in " << stopwatch.elapsed() << "ms" << endl;
+        TestSmall();
+        uint64_t elapsed = stopwatch.lap();
+        cout << "Completed small objects in " << elapsed << "ms" << endl;
+
+        TestLarge();
+        elapsed = stopwatch.lap();
+        cout << "Completed large objects in " << elapsed << "ms" << endl;
+
+        pair<uint64_t, vector<uint64_t>> laps = stopwatch.elapsed_laps();
+        cout << "Completed test in " << laps.first << "ms" << endl;
     }
 
-    uint64_t Tester::TestSmall()
+    void Tester::TestSmall()
     {
         Stopwatch localStopwatch;
 
@@ -28,8 +33,20 @@ namespace AdvancedTools
         {
             testingObjects.push_back(new SmallObject(i));
         }
-        cout << "Size of \'smallObject\': " << sizeof(testingObjects.end()) << endl;
-        return localStopwatch.elapsed();
+        cout << testingObjects.back()->to_string() << endl;
+    }
+
+    void Tester::TestLarge()
+    {
+        Stopwatch localStopwatch;
+        localStopwatch.start();
+
+        for(size_t i = 0; i < sampleSize; ++i)
+        {
+            testingObjects.push_back(new LargeObject(i, sampleSize));
+        }
+
+        cout << testingObjects.back()->to_string() << endl;
     }
 
     Tester::~Tester()

@@ -8,7 +8,7 @@ using namespace AdvancedTools;
 // TODO: add argument support.
 int main(int argc, char *argv[])
 {
-    int sampleSize = 10000;
+    int sampleSize = 10;
 
     if (argc > 1)
     {

@@ -1,13 +1,16 @@
 #ifndef TESTER
 #define TESTER
 
-#include <list>
 #include <iostream>
+#include <utility>
 #include <string>
+#include <vector>
+#include <list>
 
 #include "plugins/Stopwatch.hpp"
 #include "TestingObject.hpp"
 #include "SmallObject.hpp"
+#include "LargeObject.hpp"
 
 using namespace std;
 using namespace stopwatch;
@@ -28,9 +31,9 @@ namespace AdvancedTools
         ~Tester();
 
     private:
-        uint64_t TestSmall();
-        uint64_t TestMedium();
-        uint64_t TestLarge();
+        void TestSmall();
+        void TestMedium();
+        void TestLarge();
     };
 }
 #endif
