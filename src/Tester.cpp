@@ -2,54 +2,60 @@
 
 namespace AdvancedTools
 {
-    Tester::Tester(int sampleSize)
+    Tester::Tester()
     {
-        this->sampleSize = sampleSize;   
+        cout << "Initialized tester..." << endl;
     }
 
-    void Tester::Run()
+    void Tester::Run(int sampleSize)
     {
-        cout << "Running test with " << sampleSize << " iterations." << endl << endl;
+        stringstream sstream;
+        tuple<uint64_t, string> scaledTime;
+
+        sstream << "Running test with " << sampleSize << " iterations.";
+        cout << endl << string(65, '-')  << sstream.str() << endl;
+        sstream.str(string());
 
         stopwatch.start();
 
-        TestSmall();
-        uint64_t elapsed = stopwatch.lap();
-        cout << "Completed small objects in " << elapsed << "ms" << endl;
+        TestSmall(sampleSize);
+        scaledTime = GetScaledTime();
+        sstream << "Completed " << testingObjects.back()->to_string() << " in";
+        cout << FormatMeasuredMessage(sstream.str(), get<0>(scaledTime), get<1>(scaledTime)) << endl;
+        sstream.str(string());
 
-        TestLarge();
-        elapsed = stopwatch.lap();
-        cout << "Completed large objects in " << elapsed << "ms" << endl;
+        TestLarge(sampleSize);
+        scaledTime = GetScaledTime();
+        sstream << "Completed " << testingObjects.back()->to_string() << " in";
+        cout << FormatMeasuredMessage(sstream.str(), get<0>(scaledTime), get<1>(scaledTime)) << endl;
+        sstream.str(string());
 
-        pair<uint64_t, vector<uint64_t>> laps = stopwatch.elapsed_laps();
-        cout << "Completed test in " << laps.first << "ms" << endl;
+        scaledTime = GetScaledTime(true);
+        sstream << "Completed test in";
+        cout << FormatMeasuredMessage(sstream.str(), get<0>(scaledTime), get<1>(scaledTime)) << endl;
+
+
+        cout << FormatMeasuredMessage("Memory in use", GetUsedMemoryMB(), "MB", true) << endl;
+        CleanList();
     }
 
-    void Tester::TestSmall()
+    void Tester::TestSmall(int &sampleSize)
     {
-        Stopwatch localStopwatch;
-
         for (size_t i = 0; i < sampleSize; ++i)
         {
             testingObjects.push_back(new SmallObject(i));
         }
-        cout << testingObjects.back()->to_string() << endl;
     }
 
-    void Tester::TestLarge()
+    void Tester::TestLarge(int &sampleSize)
     {
-        Stopwatch localStopwatch;
-        localStopwatch.start();
-
-        for(size_t i = 0; i < sampleSize; ++i)
+        for (size_t i = 0; i < sampleSize; ++i)
         {
             testingObjects.push_back(new LargeObject(i, sampleSize));
         }
-
-        cout << testingObjects.back()->to_string() << endl;
     }
 
-    Tester::~Tester()
+    void Tester::CleanList()
     {
         stopwatch.start();
 
@@ -59,6 +65,11 @@ namespace AdvancedTools
             testingObjects.pop_front();
         }
 
-        cout << "cleaned up in " << stopwatch.elapsed() << " ms" << endl;
+        uint64_t elapsed;
+        string timeScale;
+        auto scaledTime = GetScaledTime();
+        cout << FormatMeasuredMessage("Cleared list in", get<0>(scaledTime), get<1>(scaledTime));
     }
+
+    Tester::~Tester() { cout << "\nDeleting tester..." << endl; }
 }

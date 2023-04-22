@@ -23,7 +23,7 @@ namespace AdvancedTools
         string to_string() const override
         {            
             std::ostringstream ss;
-            ss << "large#" << id << " with size of " << sizeof(contents) + ((contents.size() + 1) * sizeof(int*));
+            ss << "large#" << id << " with size of: " << sizeof(contents) + ((contents.size() + 1) * sizeof(int*));
             return ss.str();
         }
     };
