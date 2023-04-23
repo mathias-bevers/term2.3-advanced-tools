@@ -41,44 +41,39 @@ namespace AdvancedTools
 
         void CleanList();
 
-        std::tuple<uint64_t, std::string> GetScaledTime(bool allLaps = false)
+        std::tuple<double, std::string> GetScaledTime(bool allLaps = false)
         {
-            uint64_t elapsedMilli;
-            uint64_t elapsedMicro;
+            double elapsedMicro = (allLaps) ? stopwatch.elapsed_laps<microseconds>().first : stopwatch.lap<microseconds>();
+            double elapsedMilli = elapsedMicro / 1000.0;
+            double elapsedSec = elapsedMilli / 1000.0;
 
-            if (allLaps)
+            if (elapsedSec >= 1)
             {
-                elapsedMicro = stopwatch.elapsed_laps<microseconds>().first;
-                elapsedMilli = (uint64_t)((elapsedMicro / 1000.0) + 0.5);
-            }
-            else
-            {
-                elapsedMicro = stopwatch.lap<microseconds>();
-                elapsedMilli = (uint64_t)((elapsedMicro / 1000.0) + 0.5);
+                return {elapsedSec, "s"};
             }
 
-            if (elapsedMilli < 1)
+            if (elapsedMilli >= 1)
             {
-                return {elapsedMicro, "\xE6s"};
+                return {elapsedMilli, "ms"};
             }
 
-            return {elapsedMilli, "ms"};
+            return {elapsedMicro, "\xE6s"};
         }
 
-        std::string FormatMeasuredMessage(std::string message, double value, std::string measurement, bool decimalPrecision = false)
+        std::string FormatMeasuredMessage(std::string message, double value, std::string measurement)
         {
-            if (message.length() > 50)
+            int padding = 55;
+            std::stringstream sstream;
+            sstream << std::fixed << std::setprecision(2) << value;
+            if (message.length() + sstream.str().length() > padding)
             {
                 std::cout << "FAILED TO FORMAT (message is too long): " << message << ":" << message.length();
                 return "\n\nNULL";
             }
 
-            std::stringstream sstream;
-            sstream << std::fixed << std::setprecision(decimalPrecision ? 2 : 0) << value;
-
-            std::string result = message.append(50 - message.length(), ' ');
+            std::string result = message.append(padding - message.length() - sstream.str().length(), ' ');
             result.append(sstream.str());
-            result = result.append(60 - result.length(), ' ');
+            result = result.append(padding + 5 - result.length(), ' ');
             result.append(measurement);
             return result;
         }

@@ -10,7 +10,7 @@ namespace AdvancedTools
     void Tester::Run(int sampleSize)
     {
         std::stringstream sstream;
-        std::tuple<uint64_t, std::string> scaledTime;
+        std::tuple<double, std::string> scaledTime;
 
         sstream << "Running test with " << sampleSize << " iterations.";
         std::cout << std::endl <<std::string(65, '-')  << sstream.str() << std::endl;
@@ -35,7 +35,7 @@ namespace AdvancedTools
         std::cout << FormatMeasuredMessage(sstream.str(), std::get<0>(scaledTime), std::get<1>(scaledTime)) << std::endl;
 
 
-        std::cout << FormatMeasuredMessage("Memory in use", GetUsedMemoryMB(), "MB", true) << std::endl;
+        std::cout << FormatMeasuredMessage("Memory in use", GetUsedMemoryMB(), "MB") << std::endl;
         CleanList();
     }
 

@@ -23,10 +23,10 @@ std::string GetSystemInfo()
 
 int main(int argc, char *argv[])
 {
+    std::cout << GetSystemInfo() << "\n\n"; 
 
-    std::cout << GetSystemInfo() << std::endl; 
 
-    std::list<int> sampleSizes{10, 100, 1000, 5000};
+    std::list<int> sampleSizes{10, 100, 1000, 2500};
     Tester *tester = new Tester();
 
     if (argc >= 2)
