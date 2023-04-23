@@ -1,5 +1,4 @@
-#ifndef TESTER
-#define TESTER
+#pragma once
 
 #include <iostream>
 #include <utility>
@@ -18,7 +17,6 @@
 #include "SmallObject.hpp"
 #include "LargeObject.hpp"
 
-using namespace std;
 using namespace stopwatch;
 
 namespace AdvancedTools
@@ -43,7 +41,7 @@ namespace AdvancedTools
 
         void CleanList();
 
-        tuple<uint64_t, string> GetScaledTime(bool allLaps = false)
+        std::tuple<uint64_t, std::string> GetScaledTime(bool allLaps = false)
         {
             uint64_t elapsedMilli;
             uint64_t elapsedMicro;
@@ -67,18 +65,18 @@ namespace AdvancedTools
             return {elapsedMilli, "ms"};
         }
 
-        string FormatMeasuredMessage(string message, double value, string measurement, bool decimalPrecision = false)
+        std::string FormatMeasuredMessage(std::string message, double value, std::string measurement, bool decimalPrecision = false)
         {
             if (message.length() > 50)
             {
-                cout << "FAILED TO FORMAT (message is too long): " << message << ":" << message.length();
+                std::cout << "FAILED TO FORMAT (message is too long): " << message << ":" << message.length();
                 return "\n\nNULL";
             }
 
-            stringstream sstream;
-            sstream << fixed << setprecision(decimalPrecision ? 2 : 0) << value;
+            std::stringstream sstream;
+            sstream << std::fixed << std::setprecision(decimalPrecision ? 2 : 0) << value;
 
-            string result = message.append(50 - message.length(), ' ');
+            std::string result = message.append(50 - message.length(), ' ');
             result.append(sstream.str());
             result = result.append(60 - result.length(), ' ');
             result.append(measurement);
@@ -92,4 +90,3 @@ namespace AdvancedTools
         }
     };
 }
-#endif

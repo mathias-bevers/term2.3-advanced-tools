@@ -4,38 +4,38 @@ namespace AdvancedTools
 {
     Tester::Tester()
     {
-        cout << "Initialized tester..." << endl;
+        std::cout << "Initialized tester..." << std::endl;
     }
 
     void Tester::Run(int sampleSize)
     {
-        stringstream sstream;
-        tuple<uint64_t, string> scaledTime;
+        std::stringstream sstream;
+        std::tuple<uint64_t, std::string> scaledTime;
 
         sstream << "Running test with " << sampleSize << " iterations.";
-        cout << endl << string(65, '-')  << sstream.str() << endl;
-        sstream.str(string());
+        std::cout << std::endl <<std::string(65, '-')  << sstream.str() << std::endl;
+        sstream.str(std::string());
 
         stopwatch.start();
 
         TestSmall(sampleSize);
         scaledTime = GetScaledTime();
         sstream << "Completed " << testingObjects.back()->to_string() << " in";
-        cout << FormatMeasuredMessage(sstream.str(), get<0>(scaledTime), get<1>(scaledTime)) << endl;
-        sstream.str(string());
+        std::cout << FormatMeasuredMessage(sstream.str(), std::get<0>(scaledTime), std::get<1>(scaledTime)) << std::endl;
+        sstream.str(std::string());
 
         TestLarge(sampleSize);
         scaledTime = GetScaledTime();
         sstream << "Completed " << testingObjects.back()->to_string() << " in";
-        cout << FormatMeasuredMessage(sstream.str(), get<0>(scaledTime), get<1>(scaledTime)) << endl;
-        sstream.str(string());
+        std::cout << FormatMeasuredMessage(sstream.str(), std::get<0>(scaledTime), std::get<1>(scaledTime)) << std::endl;
+        sstream.str(std::string());
 
         scaledTime = GetScaledTime(true);
         sstream << "Completed test in";
-        cout << FormatMeasuredMessage(sstream.str(), get<0>(scaledTime), get<1>(scaledTime)) << endl;
+        std::cout << FormatMeasuredMessage(sstream.str(), std::get<0>(scaledTime), std::get<1>(scaledTime)) << std::endl;
 
 
-        cout << FormatMeasuredMessage("Memory in use", GetUsedMemoryMB(), "MB", true) << endl;
+        std::cout << FormatMeasuredMessage("Memory in use", GetUsedMemoryMB(), "MB", true) << std::endl;
         CleanList();
     }
 
@@ -66,10 +66,10 @@ namespace AdvancedTools
         }
 
         uint64_t elapsed;
-        string timeScale;
+        std::string timeScale;
         auto scaledTime = GetScaledTime();
-        cout << FormatMeasuredMessage("Cleared list in", get<0>(scaledTime), get<1>(scaledTime));
+        std::cout << FormatMeasuredMessage("Cleared list in", std::get<0>(scaledTime), std::get<1>(scaledTime));
     }
 
-    Tester::~Tester() { cout << "\nDeleting tester..." << endl; }
+    Tester::~Tester() { std::cout << "\nDeleting tester..." << std::endl; }
 }

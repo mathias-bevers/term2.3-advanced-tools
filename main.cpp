@@ -1,28 +1,22 @@
 #include <iostream>
-#include <list>
-#include <sysinfoapi.h>
 #include <string>
+#include <list>
 
-#include "src/Tester.hpp"
+#include "src/plugins/MemoryInfo.hpp"
 #include "src/plugins/cpuinfo.hpp"
+#include "src/Tester.hpp"
 
 using namespace AdvancedTools;
 
-string GetSystemInfo()
+std::string GetSystemInfo()
 {
-    stringstream sstream;
+    std::stringstream sstream;
 
     CPUInfo cpuInfo;
-    sstream << "CPU: " << cpuInfo.model() << endl; 
+    sstream << "CPU: " << cpuInfo.model() << std::endl; 
 
-    unsigned long long physicalMemoryKB = 0;
-    GetPhysicallyInstalledSystemMemory(&physicalMemoryKB);
-    double physicalMemoryGB =  physicalMemoryKB / 1024.0 / 1024.0;
-    
-    sstream << "RAM: ";
-    sstream << fixed << setprecision(2) << physicalMemoryGB << " GB";
-    sstream << endl << endl;
-
+    smbios::MemoryInfo memoryInfo;
+    sstream << "RAM: " << memoryInfo.get_memory_info();
 
     return sstream.str();
 }
@@ -30,9 +24,9 @@ string GetSystemInfo()
 int main(int argc, char *argv[])
 {
 
-    cout << GetSystemInfo() << endl; 
+    std::cout << GetSystemInfo() << std::endl; 
 
-    list<int> sampleSizes{10, 100, 1000, 5000};
+    std::list<int> sampleSizes{10, 100, 1000, 5000};
     Tester *tester = new Tester();
 
     if (argc >= 2)
@@ -47,7 +41,7 @@ int main(int argc, char *argv[])
 
                 if (sampleSize <= 0)
                 {
-                    throw new out_of_range("A sample size needs to be bigger than zero!");
+                    throw new std::out_of_range("A sample size needs to be bigger than zero!");
                 }
 
                 sampleSizes.push_back(sampleSize);

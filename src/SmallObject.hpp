@@ -4,7 +4,6 @@
 
 #include "TestingObject.hpp"
 
-using namespace std;
 namespace AdvancedTools
 {
     /// @brief A class with just an id which makes the N.
@@ -17,9 +16,9 @@ namespace AdvancedTools
         SmallObject(int index);
         ~SmallObject() override;
 
-        string to_string() const override
+        std::string to_string() const override
         {
-            std::ostringstream ss;
+            std::stringstream ss;
             ss << "small#" << *integer << " with size of: " << sizeof(int*);
             return ss.str();
         }
