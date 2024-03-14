@@ -8,6 +8,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -mcmodel=medium")
 file(GLOB_RECURSE SOURCES
         src/*.h
         src/*.cpp
+        libraries/*.hpp
 )
 
 add_executable(advanced_tools ${SOURCE_FILES} ${SOURCES} main.cpp)

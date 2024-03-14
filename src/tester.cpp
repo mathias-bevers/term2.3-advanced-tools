@@ -3,6 +3,9 @@
 #include <sys/time.h>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
+
+#include "../libraries/json.hpp"
 
 namespace advanced_tools {
 
@@ -88,12 +91,15 @@ namespace advanced_tools {
 
     std::string Tester::generate_summary(double(& times)[4][ITERATIONS])
     {
-        std::stringstream sstream;
+        std::ofstream file_steam("full_results.json");
+        nlohmann::json json;
         double total_time = 0;
 
         for (int i = 1; i < ITERATIONS; ++i) {
+            std::string iteration_name = "iteration_" + std::to_string(i);
             for (int ii = 0; ii < 4; ++ii) {
                 OperationSummary& summary = summaries[ii];
+                json[iteration_name][summary.label] = times[ii][i];
 
                 summary.average_time = summary.average_time + times[ii][i];
                 summary.min_time = std::min(summary.min_time, times[ii][i]);
@@ -102,7 +108,13 @@ namespace advanced_tools {
             }
         }
 
+        json["total_time"] = total_time;
 
+        file_steam << json;
+        file_steam.close();
+
+
+        std::stringstream sstream;
         for (int i = 0; i < 4; ++i) {
             OperationSummary& summary = summaries[i];
             summary.average_time = summary.average_time / (double) (ITERATIONS - 1);
