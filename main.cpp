@@ -3,9 +3,9 @@
 
 int main()
 {
-    advanced_tools::Tester tester("Hello World");
+    advanced_tools::Tester tester;
     tester.run();
 
-    std::cout <<"Press enter to exit...";
+    std::cout << "Press enter to exit...";
     std::cin.ignore();
 }
