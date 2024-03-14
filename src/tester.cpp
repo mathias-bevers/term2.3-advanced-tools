@@ -54,7 +54,8 @@ namespace advanced_tools {
         printf("Initializing tester...\n");
         printf(H_LINE);
         printf("\tArray size = %d\n", STREAM_ARRAY_SIZE);
-        printf("\tMemory per array = %.1f MiB (= %.1f GiB).\n", mib_per_word, gib_per_word);
+        printf("\tMemory per array = %.1f MiB (= %.1f GiB).\n", bytes_per_word * mib_per_word,
+               bytes_per_word * gib_per_word);
         printf("\tTotal memory required = %.1f MiB (= %.1f GiB).\n", (3.0 * bytes_per_word) * mib_per_word,
                (3.0 * bytes_per_word) * gib_per_word);
         printf("\tEach kernel will be executed %d times.\n", ITERATIONS);

@@ -10,7 +10,7 @@
 #endif
 
 #ifndef STREAM_ARRAY_SIZE
-#   define STREAM_ARRAY_SIZE 75000000 // after some testing this requires around 13.4GiB of memory.
+#   define STREAM_ARRAY_SIZE   625000000 // after some testing this requires around 14305.1 MiB of memory.
 #endif
 
 #ifndef ITERATIONS
@@ -41,8 +41,8 @@ namespace advanced_tools {
         };
 
         int bytes_per_word = sizeof(STREAM_TYPE);
-        double mib_per_word = bytes_per_word * ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0);
-        double gib_per_word = bytes_per_word * ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0 / 1024.0);
+        double mib_per_word = ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0);
+        double gib_per_word = ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0 / 1024.0);
 
     public:
         Tester();
