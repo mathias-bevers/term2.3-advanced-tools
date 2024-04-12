@@ -11,4 +11,20 @@ file(GLOB_RECURSE SOURCES
         libraries/*.hpp
 )
 
-add_executable(advanced_tools ${SOURCE_FILES} ${SOURCES} main.cpp)
+# create all the executables with different sizes and iterations
+
+add_executable(at_10_10k ${SOURCES} main.cpp)
+target_compile_definitions(at_10_10k PRIVATE STREAM_ARRAY_SIZE=10 ITERATIONS=10000)
+target_link_libraries(at_10_10k PRIVATE -static-libgcc -static-libstdc++ -static)
+
+add_executable(at_10k_10k ${SOURCES} main.cpp)
+target_compile_definitions(at_10k_10k PRIVATE STREAM_ARRAY_SIZE=10000 ITERATIONS=10000)
+target_link_libraries(at_10k_10k PRIVATE -static-libgcc -static-libstdc++ -static)
+
+add_executable(at_10m_10k ${SOURCES} main.cpp)
+target_compile_definitions(at_10m_10k PRIVATE STREAM_ARRAY_SIZE=10000000 ITERATIONS=10000)
+target_link_libraries(at_10m_10k PRIVATE -static-libgcc -static-libstdc++ -static)
+
+add_executable(at_100m_10k ${SOURCES} main.cpp)
+target_compile_definitions(at_100m_10k PRIVATE STREAM_ARRAY_SIZE=100000000 ITERATIONS=10000)
+target_link_libraries(at_100m_10k PRIVATE -static-libgcc -static-libstdc++ -static)

@@ -8,11 +8,6 @@
 #include "../libraries/json.hpp"
 
 namespace advanced_tools {
-
-    STREAM_TYPE Tester::a[STREAM_ARRAY_SIZE];
-    STREAM_TYPE Tester::b[STREAM_ARRAY_SIZE];
-    STREAM_TYPE Tester::c[STREAM_ARRAY_SIZE];
-
     Tester::Tester()
     {
         printf(H_LINE);
@@ -78,8 +73,8 @@ namespace advanced_tools {
         }
 
         double t = get_second();
-        for (double& i: a) {
-            i = 2.0E0 * i;
+        for (size_t i = 0; i < STREAM_ARRAY_SIZE; ++i) {
+            a[i] = 2.0E0 * a[i];
         }
         t = 1.0E6 * (get_second() - t);
         printf(H_LINE);
@@ -174,6 +169,11 @@ namespace advanced_tools {
             }
 
             times[3][i] = get_second() - times[3][i];
+
+
+            if(i % 1000 == 0) {
+                printf("\t\t%d iterations left\n", ITERATIONS - i);
+            }
         }
 
         std::string summary = generate_summary(times);

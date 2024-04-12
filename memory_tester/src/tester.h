@@ -23,7 +23,9 @@ namespace advanced_tools {
     class Tester {
     private:
         // these arrays need to be static to get a high capacity.
-        static STREAM_TYPE a[STREAM_ARRAY_SIZE], b[STREAM_ARRAY_SIZE], c[STREAM_ARRAY_SIZE];
+        STREAM_TYPE* b = new STREAM_TYPE[STREAM_ARRAY_SIZE];
+        STREAM_TYPE* a = new STREAM_TYPE[STREAM_ARRAY_SIZE];
+        STREAM_TYPE* c = new STREAM_TYPE[STREAM_ARRAY_SIZE];
 
         OperationSummary summaries[4] = {
                 {"copy", 0, DBL_MAX, 0, -1},
