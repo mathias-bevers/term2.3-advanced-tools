@@ -45,9 +45,10 @@ namespace advanced_tools {
         int bytes_per_word = sizeof(STREAM_TYPE);
         double mib_per_word = ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0);
         double gib_per_word = ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0 / 1024.0);
+        const std::string suffix;
 
     public:
-        Tester();
+        Tester(std::string suffix);
 
         double get_second();
 

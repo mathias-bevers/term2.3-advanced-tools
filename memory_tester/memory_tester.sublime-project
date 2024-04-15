@@ -1,0 +1,19 @@
+{
+	"folders":	[{ "path": "." }],
+	"settings": {
+		"tab_size": 4,
+    	"ClangFormat": {
+    	  "format_on_save": false,
+    	}
+  	},
+  	"build_systems": [ 
+  		{
+  			"name" : "cmake build - windows",
+  			"shell_cmd" : "/home/mathias/programs/cmake/bin/cmake -D'CMAKE_TOOLCHAIN_FILE=~/Documents/coding_projects/mingw-w64-x86_64.cmake' -S ${project_path} -B ${project_path}/builds/windows && /home/mathias/programs/cmake/bin/cmake --build ${project_path}/builds/windows"
+  		},
+  		{
+  			"name" : "cmake build - linux",
+  			"shell_cmd" : "/home/mathias/programs/cmake/bin/cmake -S ${project_path} -B ${project_path}/builds/linux && /home/mathias/programs/cmake/bin/cmake --build ${project_path}/builds/linux"
+  		}
+  	]
+}
