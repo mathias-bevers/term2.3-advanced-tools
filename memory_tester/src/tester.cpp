@@ -8,12 +8,7 @@
 #include "../libraries/json.hpp"
 
 namespace advanced_tools {
-
-    STREAM_TYPE Tester::a[STREAM_ARRAY_SIZE];
-    STREAM_TYPE Tester::b[STREAM_ARRAY_SIZE];
-    STREAM_TYPE Tester::c[STREAM_ARRAY_SIZE];
-
-    Tester::Tester()
+    Tester::Tester(std::string suffix) : suffix(suffix)
     {
         printf(H_LINE);
         printf("Initializing tester v0.1\n");
@@ -78,8 +73,8 @@ namespace advanced_tools {
         }
 
         double t = get_second();
-        for (double& i: a) {
-            i = 2.0E0 * i;
+        for (size_t i = 0; i < STREAM_ARRAY_SIZE; ++i) {
+            a[i] = 2.0E0 * a[i];
         }
         t = 1.0E6 * (get_second() - t);
         printf(H_LINE);
@@ -91,7 +86,7 @@ namespace advanced_tools {
 
     std::string Tester::generate_summary(double(& times)[4][ITERATIONS])
     {
-        std::ofstream file_steam("full_results.json");
+        std::ofstream file_steam("full_results" + suffix + ".json");
         nlohmann::json json;
         double total_time = 0;
 
@@ -143,6 +138,7 @@ namespace advanced_tools {
 
         double times[4][ITERATIONS];
         STREAM_TYPE scalar = 3.0;
+        int one_tenth = static_cast <int> (std::floor(ITERATIONS / 10));
 
         for (int i = 0; i < ITERATIONS; ++i) {
             times[0][i] = get_second();
@@ -174,6 +170,11 @@ namespace advanced_tools {
             }
 
             times[3][i] = get_second() - times[3][i];
+
+
+            if(i % one_tenth == 0) {
+                printf("\t\t%d iterations left\n", ITERATIONS - i);
+            }
         }
 
         std::string summary = generate_summary(times);

@@ -23,7 +23,9 @@ namespace advanced_tools {
     class Tester {
     private:
         // these arrays need to be static to get a high capacity.
-        static STREAM_TYPE a[STREAM_ARRAY_SIZE], b[STREAM_ARRAY_SIZE], c[STREAM_ARRAY_SIZE];
+        STREAM_TYPE* b = new STREAM_TYPE[STREAM_ARRAY_SIZE];
+        STREAM_TYPE* a = new STREAM_TYPE[STREAM_ARRAY_SIZE];
+        STREAM_TYPE* c = new STREAM_TYPE[STREAM_ARRAY_SIZE];
 
         OperationSummary summaries[4] = {
                 {"copy", 0, DBL_MAX, 0, -1},
@@ -43,9 +45,10 @@ namespace advanced_tools {
         int bytes_per_word = sizeof(STREAM_TYPE);
         double mib_per_word = ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0);
         double gib_per_word = ((double) STREAM_ARRAY_SIZE / 1024.0 / 1024.0 / 1024.0);
+        const std::string suffix;
 
     public:
-        Tester();
+        Tester(std::string suffix);
 
         double get_second();
 
